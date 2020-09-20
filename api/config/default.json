@@ -1,0 +1,4 @@
+{
+  "port": 5000,
+  "mongoURI": "mongodb+srv://mbaboshko:zL3rWSLf7NLC0lkX@main.efmol.gcp.mongodb.net/notes?retryWrites=true&w=majority"
+}
