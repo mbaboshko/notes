@@ -37,6 +37,10 @@ export default function ContentSide({ match }) {
     }
   }, [notes, active, dispatch, match.params.id])
 
+  useEffect(() => {
+    setEditable(false)
+  }, [active])
+
   if (loading || typeof active !== 'string') return <DarkLoader />
 
   return (
