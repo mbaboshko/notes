@@ -139,6 +139,12 @@ h6 {
   font-size: 18px;
 }
 
+.default-notes {
+  text-align: center;
+  font-size: 18px;
+  letter-spacing: 1px;
+}
+
 .notes__list {
   overflow-y: auto;
   margin-bottom: 40px;

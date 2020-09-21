@@ -15,6 +15,7 @@ const connect = async () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
+      useFindAndModify: false,
     })
 
     app.listen(PORT, () => console.log(`Server has been started on http://localhost:${PORT}`))
