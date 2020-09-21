@@ -10,6 +10,7 @@ import { useSearch } from '../context/SearchContext'
 export default function ContentSide({ match }) {
   const { notes, active } = useSelector(state => state.notes)
   const { loading } = useSelector(state => state.app)
+  const [checkActive, setCheckActive] = useState(null)
 
   const [editable, setEditable] = useState(false)
   const [title, setTitle] = useState('')
@@ -37,6 +38,7 @@ export default function ContentSide({ match }) {
   useEffect(() => {
     if (!loading && notes.length > 0) {
       const activeNote = notes.find(note => match.params.id === note._id)
+      setCheckActive(activeNote)
 
       if (activeNote) {
         const { title, text, _id } = activeNote
@@ -53,7 +55,7 @@ export default function ContentSide({ match }) {
     setEditable(false)
   }, [active])
 
-  if (notes.length === 0) return <ContentDefault />
+  if (!checkActive || notes.length === 0) return <ContentDefault />
   if (loading || typeof active !== 'string') return <DarkLoader />
 
   return (
