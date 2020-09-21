@@ -1,16 +1,20 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import { useSearch } from '../context/SearchContext'
 import { createNote } from '../store/actions'
 
 export default function CreateNote() {
-  const dispatch = useDispatch()
-  const history = useHistory()
   const [title, setTitle] = useState('')
   const [text, setText] = useState('')
 
+  const { clearSearchField } = useSearch()
+  const history = useHistory()
+  const dispatch = useDispatch()
+
   const onSaveHandler = () => {
     dispatch(createNote({ title, text }))
+    clearSearchField()
     history.push('/')
     setTitle('')
     setText('')

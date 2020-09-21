@@ -30,6 +30,7 @@ export default function ContentSide({ match }) {
   const onDeleteHandler = () => {
     dispatch(deleteNote(active))
     dispatch(changeActive(null))
+    clearSearchField()
     history.push('/')
   }
 
