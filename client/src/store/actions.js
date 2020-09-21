@@ -16,9 +16,8 @@ export const finishLoading = () => ({ type: FINISH_LOADING })
 // Async ==============================================================================
 
 export const getNotes = () => async dispatch => {
-  dispatch(startLoading())
-
   try {
+    dispatch(startLoading())
     const { data } = await axios.get('/')
 
     dispatch(notesLoaded(data))
@@ -55,6 +54,19 @@ export const updateNote = note => async dispatch => {
 
     if (data.status === 'success') dispatch(getNotes())
   } catch (error) {
+    console.error('Error:', error.message)
+  }
+}
+
+export const getFilteredNotes = text => async dispatch => {
+  try {
+    dispatch(startLoading())
+    const { data } = await axios.get(`/search?title=${text}&text=${text}`)
+
+    dispatch(notesLoaded(data))
+    dispatch(finishLoading())
+  } catch (error) {
+    dispatch(finishLoading())
     console.error('Error:', error.message)
   }
 }

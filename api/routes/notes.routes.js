@@ -34,6 +34,19 @@ router.put('/:id', async (req, res) => {
   }
 })
 
+router.get('/search', async (req, res) => {
+  const { title, text } = req.query
+  const options = [{ title: new RegExp(title, 'i') }, { text: new RegExp(text, 'i') }]
+
+  try {
+    const notes = await Note.find({ $or: options })
+
+    res.status(200).json(notes)
+  } catch (error) {
+    errorHandler(error)
+  }
+})
+
 router.get('/', async (req, res) => {
   try {
     const notes = await Note.find()

@@ -3,21 +3,27 @@ import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { changeActive, deleteNote, updateNote } from '../store/actions'
 import ContentFooter from './ContentFooter'
+import ContentDefault from './ContentDefault'
 import DarkLoader from './DarkLoader'
+import { useSearch } from '../context/SearchContext'
 
 export default function ContentSide({ match }) {
   const { notes, active } = useSelector(state => state.notes)
   const { loading } = useSelector(state => state.app)
+
   const [editable, setEditable] = useState(false)
   const [title, setTitle] = useState('')
   const [text, setText] = useState('')
+
   const dispatch = useDispatch()
   const history = useHistory()
+  const { clearSearchField } = useSearch()
 
   const onEditHandler = () => setEditable(true)
 
   const onSaveHandler = () => {
     setEditable(false)
+    clearSearchField()
     dispatch(updateNote({ _id: active, title, text, date: new Date() }))
   }
 
@@ -28,19 +34,25 @@ export default function ContentSide({ match }) {
   }
 
   useEffect(() => {
-    if (typeof active === 'string') {
-      const { title, text } = notes.find(note => active === note._id)
-      setTitle(title)
-      setText(text)
-    } else if (notes.length > 0 && match.params.id) {
-      dispatch(changeActive(match.params.id))
+    if (!loading && notes.length > 0) {
+      const activeNote = notes.find(note => match.params.id === note._id)
+
+      if (activeNote) {
+        const { title, text, _id } = activeNote
+
+        setTitle(title)
+        setText(text)
+
+        if (!active) dispatch(changeActive(_id))
+      }
     }
-  }, [notes, active, dispatch, match.params.id])
+  }, [notes, loading, active, dispatch, match.params.id])
 
   useEffect(() => {
     setEditable(false)
   }, [active])
 
+  if (notes.length === 0) return <ContentDefault />
   if (loading || typeof active !== 'string') return <DarkLoader />
 
   return (
