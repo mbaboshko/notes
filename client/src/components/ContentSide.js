@@ -18,7 +18,7 @@ export default function ContentSide({ match }) {
 
   const onSaveHandler = () => {
     setEditable(false)
-    dispatch(updateNote({ _id: active, title, text }))
+    dispatch(updateNote({ _id: active, title, text, date: new Date() }))
   }
 
   const onDeleteHandler = () => {

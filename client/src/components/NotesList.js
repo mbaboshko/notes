@@ -21,8 +21,8 @@ export default function NotesList() {
     history.push('/')
   }
 
-  if (notes.length === 0) return <h3 className="default-notes">There is nothing here yet :(</h3>
   if (loading) return <Loader />
+  if (notes.length === 0) return <h3 className="default-notes">There is nothing here yet :(</h3>
 
   return (
     <ul className="notes__list">
