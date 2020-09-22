@@ -36,9 +36,11 @@ export default function CreateNote() {
         onChange={e => setText(e.target.value)}
       ></textarea>
       <footer className="content__footer">
-        <button className="btn btn--grey" onClick={onSaveHandler}>
-          Save
-        </button>
+        {title.length !== 0 ? (
+          <button className="btn btn--grey" onClick={onSaveHandler}>
+            Save
+          </button>
+        ) : null}
       </footer>
     </div>
   )
